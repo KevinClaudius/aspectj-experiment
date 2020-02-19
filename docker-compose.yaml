@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   webapp:
     image: tomcat-base
@@ -8,24 +8,35 @@ services:
       - rdbms-net
     ports:
       - "8080:8080"
+      - "8000:8000"
       - "4000:4000"
     volumes:
       - .:/target:delegated
       - ./glowroot:/glowroot:delegated
       - ~/.m2/repository/ServletFilterExample/ServletFilterExample/1.0-SNAPSHOT/ServletFilterExample-1.0-SNAPSHOT.war:$CATALINA_HOME/webapps/ServletFilterExample.war
+      - ./aopjar/build/libs/aopjar.jar:$CATALINA_HOME/lib/aopjar.jar
+      - ./docker-build/aop.xml:$CATALINA_HOME/aop.xml
+      - ./contract/build/libs/contract-1.0.0.jar:$CATALINA_HOME/lib/contract-1.0.0.jar
 
-  h2:
-    image: buildo/h2database@sha256:4366082b5832c01cb61ed732bca112f27a6e9bfa9e08f19110aa2ed121025127
-    #environment:
-    #  - H2_OPTIONS=-ifNotExists # Allow creating database automatically on connection
-    ports:
-      - "1521:1521" # TCP
-      - "8081:8082"   # web console
-    volumes:
-      - ./db-init-scripts:/docker-entrypoint-initdb.d/
+  rdbms:
+    image: mysql:5.7.29
+    init: true
     networks:
       - rdbms-net
+    ports:
+      - "3306:3306"
+    volumes:
+      - data-rdbms:/var/lib/mysql
+      - "./db-init-scripts:/docker-entrypoint-initdb.d"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=test
+    user: root
 
 networks:
   rdbms-net:
     name: rdbms-net
+
+volumes:
+  data-rdbms:
+    driver: local

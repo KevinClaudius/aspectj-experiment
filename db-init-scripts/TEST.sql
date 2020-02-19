@@ -1,4 +1,5 @@
+
 CREATE TABLE TEST (
     id int,
-    value varchar(max)
+    my_string varchar(255)
 )

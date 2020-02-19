@@ -15,5 +15,8 @@ RUN set -x \
 WORKDIR $CATALINA_HOME
 COPY ./setenv.sh $CATALINA_HOME/bin/
 COPY ./context.xml $CATALINA_HOME/conf/
+COPY ./mysql-connector-java-5.1.48.jar $CATALINA_HOME/lib/
+COPY ./simpleclient-0.6.0.jar $CATALINA_HOME/lib/
+COPY ./aspectjweaver-1.9.5.jar $CATALINA_HOME
 EXPOSE 8080
 CMD ["catalina.sh", "run"]

@@ -1,8 +1,11 @@
-
+contract/build
+aopjar/build
 glowroot/data
 glowroot/tmp
 glowroot/logs
 tomcat/webapps
 tomcat/logs
-/.idea
+.idea
 /target
+.gradle
+*.iml

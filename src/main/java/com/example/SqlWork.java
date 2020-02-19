@@ -15,7 +15,7 @@ public class SqlWork {
     Connection con=null;
     try
     {
-	    DriverManager.registerDriver(new org.h2.Driver());
+	    DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 	    //DriverManager.registerDriver(new io.opentracing.contrib.jdbc.TracingDriver());
 
       //Reference to connection interface

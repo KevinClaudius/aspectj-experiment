@@ -30,11 +30,11 @@
     <Resource name="jdbc/MyDs"
       auth="Container"
       type="javax.sql.DataSource"
-      username="sa"
+      username="root"
       password=""
       maxTotal="100"
       maxIdle="30"
       maxWaitMillis="10000"
-      driverClassName="org.h2.Driver"
-      url="jdbc:h2:tcp://h2:1521/test"/>
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://rdbms:3306/test"/>
 </Context>

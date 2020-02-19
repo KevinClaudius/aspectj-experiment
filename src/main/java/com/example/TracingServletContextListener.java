@@ -6,12 +6,9 @@ package com.example;
 // import io.opentracing.contrib.web.servlet.filter.TracingFilter;
 // import io.opentracing.util.GlobalTracer;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.EnumSet;
 
 @WebListener
 public class TracingServletContextListener implements ServletContextListener {
@@ -56,6 +53,12 @@ public class TracingServletContextListener implements ServletContextListener {
     // TracingFilter filter = new TracingFilter(GlobalTracer.get());
     // FilterRegistration.Dynamic reg = servletContextEvent.getServletContext().addFilter("tracingFilter", filter);
     // reg.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+    /*
+      webapp registers the actual SqlInterceptor with the registry due to classpath
+      reasons (this allows us to keep all the Prometheus/Tracing jars in webapp
+      instead of having to stuff in tomcat/lib).
+    */
+    SqlInterceptorRegistry.getInstance().register(new SqlInterceptorImpl());
     System.out.println("TracingServletContextListener contextInitialized");
   }
 
